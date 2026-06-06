@@ -1,0 +1,19 @@
+[project]
+name = "curso-python-smart-finance"
+version = "0.1.0"
+description = "Curso de Python Smart Finance"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.0.6",
+    "streamlit>=1.58.0",
+]
+
+[dependency-groups]
+dev = [
+    "coverage==7.6.12",
+    "djlint==1.36.4",
+    "pre-commit==3.4.0",
+    "pytest==8.0.0",
+    "ruff==0.14.10",
+]

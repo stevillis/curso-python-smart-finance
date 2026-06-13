@@ -16,8 +16,20 @@ Principais tópicos abordados:
 - Tratamento de Exceções: uso de `try/except` para lidar com erros na entrada de dados.
 - Estruturas Condicionais: uso de `if`, `elif` e `else` para tomar decisões no código.
 
+## Aula 2
+
+Na segunda aula, exploramos mais exemplos práticos de lógica em Python, estruturas de repetição e manipulação de dados para apoiar o aprendizado de programação financeira.
+
+Principais tópicos abordados:
+
+- Laços de repetição: uso de `for` e `while` para iterar sobre coleções e executar ações repetidas.
+- Funções básicas: criação de funções para organizar o código e reutilizar lógica.
+- Tipos de dados compostos: listas e dicionários para armazenar conjuntos de valores.
+- Operações aritméticas e comparações: cálculos simples e condições mais complexas.
+
 ## Estrutura do projeto
 
 - `main.py`: arquivo principal do projeto.
 - `aula-01/`: exercícios e exemplos da primeira aula.
+- `aula-02/`: exercícios e exemplos da segunda aula.
 - `material-de-apoio/`: materiais extras e referências do curso.

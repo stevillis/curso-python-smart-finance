@@ -28,13 +28,27 @@
         </div>
     </div>
     <div class="responsive-grid">
-        <div class="card">
-            <h3 class="metric-title" style="margin-bottom: 1.5rem;">Fluxo de Caixa</h3>
-            <canvas id="cashflowChart" height="100"></canvas>
+        <div class="card" style="display: flex; flex-direction: column;">
+            <div>
+                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Evolução do Saldo</h3>
+                <p style="color: var(--text-secondary);
+                          font-size: 0.85rem;
+                          margin-bottom: 1.5rem">Crescimento do patrimônio nos últimos 5 meses</p>
+            </div>
+            <div style="position: relative; flex-grow: 1; min-height: 220px;">
+                <canvas id="cashflowChart"></canvas>
+            </div>
         </div>
-        <div class="card">
-            <h3 class="metric-title" style="margin-bottom: 1.5rem;">Distribuição de Despesas</h3>
-            <canvas id="donutChart" height="220"></canvas>
+        <div class="card" style="display: flex; flex-direction: column;">
+            <div>
+                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Receitas vs. Despesas</h3>
+                <p style="color: var(--text-secondary);
+                          font-size: 0.85rem;
+                          margin-bottom: 1.5rem">Comparativo financeiro do mês atual</p>
+            </div>
+            <div style="position: relative; flex-grow: 1; min-height: 220px;">
+                <canvas id="donutChart"></canvas>
+            </div>
         </div>
     </div>
     <script id="dashboard-data" type="application/json">
@@ -46,4 +60,6 @@
     }
     </script>
 {% endblock %}
-{% block extra_js %}<script src="/static/js/dashboard.js"></script>{% endblock %}
+{% block extra_js %}
+    <script src="/static/js/dashboard.js"></script>
+{% endblock %}

@@ -16,14 +16,14 @@
                 <h3 class="metric-title" style="margin-bottom: 0.25rem;">Contas da Família</h3>
                 <h3 style="font-size: 1.1rem; font-weight: 600;">Últimas Transações</h3>
             </div>
-            <table style="margin-top: 1rem;">
+            <table style="margin-top: 1rem; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Descrição</th>
-                        <th>Categoria</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
+                        <th style="text-align: left;">Data</th>
+                        <th style="text-align: left;">Descrição</th>
+                        <th style="text-align: left;">Categoria</th>
+                        <th style="text-align: center;">Tipo</th>
+                        <th style="text-align: right;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +32,7 @@
                             <td style="color: var(--text-secondary); font-size: 0.9rem;">{{ tx.date|date:"d M Y" }}</td>
                             <td style="font-weight: 500;">{{ tx.description }}</td>
                             <td>{{ tx.category }}</td>
-                            <td>
+                            <td style="text-align: center;">
                                 {% if tx.type == 'receita' %}
                                     <span class="badge badge-income">Receita</span>
                                 {% else %}
@@ -40,7 +40,8 @@
                                 {% endif %}
                             </td>
                             <td class="{% if tx.type == 'receita' %}text-green{% else %}text-red{% endif %}"
-                                style="font-weight: 600">R$ {{ tx.amount|floatformat:2 }}</td>
+                                style="font-weight: 600;
+                                       text-align: right">R$ {{ tx.amount|floatformat:2 }}</td>
                         </tr>
                     {% empty %}
                         <tr>

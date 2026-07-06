@@ -50,7 +50,6 @@ Principais tópicos abordados:
 - [Orientação para criação do GitHub](https://youtu.be/NfkZmOJ1MyA)
 - [Programando um estrutura de controle para um assistente](https://youtu.be/NfkZmOJ1MyAt)
 - [Git Hub](https://github.com/abraaonazario-ai/Encontro-II)
-- [Atividade criar github](https://docs.google.com/spreadsheets/d/1q5xDokGt_KzFxwZFj5WrQTOVfldI5R7pKdFBTfX8Rkc/edit?gid=0#gid=0)
 
 ## Aula 3: Encontro 03 — Projeto Final e IA
 

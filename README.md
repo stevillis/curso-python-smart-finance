@@ -74,4 +74,5 @@ Principais tópicos abordados:
 - `aula-01/`: exercícios e exemplos da primeira aula.
 - `aula-02/`: exercícios e exemplos da segunda aula.
 - `aula-03/`: exercícios e exemplos da terceira aula.
+- `aula-03/smart-finance/`: O aplicativo web principal desenvolvido com Django.
 - `material-de-apoio/`: materiais extras e referências do curso.

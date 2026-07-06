@@ -43,49 +43,13 @@
             <canvas id="donutChart" height="200"></canvas>
         </div>
     </div>
-    <script>
-    const ctxFlow = document.getElementById('cashflowChart').getContext('2d');
-    new Chart(ctxFlow, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
-            datasets: [{
-                label: 'Saldo',
-                data: [0, 0, 0, 0, {{ current_balance|stringformat:"f" }}],
-                borderColor: '#10b981',
-                tension: 0.4,
-                fill: true,
-                backgroundColor: 'rgba(16, 185, 129, 0.1)'
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true, grid: { color: '#2a2a35' } }, x: { grid: { color: '#2a2a35' } } }
-        }
-    });
-
-    const ctxDonut = document.getElementById('donutChart').getContext('2d');
-    new Chart(ctxDonut, {
-        type: 'doughnut',
-        data: {
-            labels: ['Receitas', 'Despesas'],
-            datasets: [{
-                data: [{{ total_income|stringformat:"f" }}, {{ total_expense|stringformat:"f" }}],
-                backgroundColor: ['#10b981', '#ef4444'],
-                borderWidth: 0
-            }]
-        },
-        options: { cutout: '75%', plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } } }
-    });
-
-    // Fetch AI Insight
-    fetch("{% url 'dashboard:insight' %}")
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('ai-insight').innerText = data.insight;
-        })
-        .catch(err => {
-            document.getElementById('ai-insight').innerText = "Insight indisponível.";
-        });
+    <script id="dashboard-data" type="application/json">
+    {
+        "currentBalance": "{{ current_balance|stringformat:'f' }}",
+        "totalIncome": "{{ total_income|stringformat:'f' }}",
+        "totalExpense": "{{ total_expense|stringformat:'f' }}",
+        "insightUrl": "{% url 'dashboard:insight' %}"
+    }
     </script>
 {% endblock %}
+{% block extra_js %}<script src="/static/js/dashboard.js"></script>{% endblock %}

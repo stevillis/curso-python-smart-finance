@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Nova Transação - SmartFinance AI{% endblock %}
+{% block title %}Nova Transação - SmartFinance{% endblock %}
 {% block content %}
     <div class="topbar">
         <h1 class="page-title">Registrar Movimentação</h1>
     </div>
-    <div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="card"
+         style="max-width: 600px;
+                margin: 0 auto;
+                padding: 2.5rem">
         <form method="POST" action="{% url 'finance:add' %}">
             {% csrf_token %}
             <div class="form-group">
@@ -13,7 +16,7 @@
                        name="description"
                        class="form-control"
                        required
-                       placeholder="Ex: Salário, Mercado...">
+                       placeholder="Ex: Salário, Supermercado...">
             </div>
             <div class="form-group">
                 <label>Valor (R$)</label>
@@ -39,14 +42,14 @@
                     <option value="Outros">Outros</option>
                 </select>
             </div>
-            <div class="form-group" style="margin-bottom: 2rem;">
+            <div class="form-group" style="margin-bottom: 2.5rem;">
                 <label>Tipo de Movimentação</label>
-                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <div style="display: flex; gap: 1.5rem; margin-top: 0.75rem;">
                     <label style="display: flex;
                                   align-items: center;
                                   gap: 0.5rem;
                                   cursor: pointer;
-                                  color: white">
+                                  font-weight: 500">
                         <input type="radio" name="type" value="receita" required>
                         Receita
                     </label>
@@ -54,7 +57,7 @@
                                   align-items: center;
                                   gap: 0.5rem;
                                   cursor: pointer;
-                                  color: white">
+                                  font-weight: 500">
                         <input type="radio" name="type" value="despesa" required>
                         Despesa
                     </label>
@@ -63,7 +66,8 @@
             <button type="submit"
                     class="btn-primary"
                     style="width: 100%;
-                           justify-content: center">Salvar Transação</button>
+                           justify-content: center;
+                           padding: 0.875rem">Salvar Transação</button>
         </form>
     </div>
 {% endblock %}

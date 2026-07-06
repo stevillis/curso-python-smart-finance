@@ -6,6 +6,11 @@
         <title>
             {% block title %}SmartFinance AI{% endblock %}
         </title>
+        <script>
+            // Prevent FOUC (Flash of Unstyled Content) by setting theme immediately
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        </script>
         <link rel="stylesheet" href="/static/css/style.css">
         {% block extra_css %}{% endblock %}
         <link rel="stylesheet"
@@ -15,9 +20,19 @@
     <body>
         {% if request.user.is_authenticated %}
             <div class="app-layout">
-                <aside class="sidebar">
+                <div class="sidebar-overlay"
+                     id="sidebar-overlay"
+                     onclick="toggleSidebar()"></div>
+                <aside class="sidebar" id="sidebar">
                     <div class="brand">
-                        <i class="fa-solid fa-chart-pie"></i> SmartFinance AI
+                        <i class="fa-solid fa-chart-pie"></i> SmartFinance
+                        <button class="btn-icon"
+                                onclick="toggleSidebar()"
+                                style="margin-left: auto;
+                                       display: none"
+                                id="sidebar-close-btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
                     <ul class="nav-links">
                         <li>
@@ -29,7 +44,7 @@
                         <li>
                             <a href="{% url 'finance:list' %}"
                                class="{% if request.resolver_match.app_name == 'finance' %}active{% endif %}">
-                                <i class="fa-solid fa-wallet"></i> Gestão Financeira
+                                <i class="fa-solid fa-wallet"></i> Finanças
                             </a>
                         </li>
                         <li>
@@ -38,12 +53,19 @@
                                 <i class="fa-solid fa-robot"></i> Assistente IA
                             </a>
                         </li>
+                    </ul>
+                    <ul class="nav-links" style="margin-top: auto;">
+                        <li>
+                            <a href="#" onclick="toggleTheme(event)">
+                                <i class="fa-solid fa-moon theme-icon-indicator"></i> Tema Escuro
+                            </a>
+                        </li>
                         <li>
                             <a href="#">
                                 <i class="fa-solid fa-gear"></i> Configurações
                             </a>
                         </li>
-                        <li style="margin-top: auto;">
+                        <li>
                             <a href="{% url 'users:logout' %}">
                                 <i class="fa-solid fa-right-from-bracket"></i> Sair
                             </a>
@@ -51,12 +73,80 @@
                     </ul>
                 </aside>
                 <main class="main-content">
+                    <div class="mobile-header">
+                        <button onclick="toggleSidebar()" class="btn-icon">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <span class="mobile-brand">SmartFinance</span>
+                    </div>
                     {% block content %}{% endblock %}
                 </main>
             </div>
         {% else %}
+            <div class="global-theme-toggle">
+                <button onclick="toggleTheme(event)"
+                        class="btn-icon theme-toggle"
+                        title="Alternar Tema"
+                        style="padding: 0.5rem;
+                               border-radius: 50%;
+                               width: 40px;
+                               height: 40px;
+                               background: var(--bg-card);
+                               border: 1px solid var(--border-color);
+                               box-shadow: var(--shadow-sm)">
+                    <i class="fa-solid fa-moon theme-icon-indicator"></i>
+                </button>
+            </div>
             {% block login_content %}{% endblock %}
         {% endif %}
+        <script>
+            // Theme toggling logic
+            function updateThemeIcon(theme) {
+                const icons = document.querySelectorAll('.theme-icon-indicator');
+                icons.forEach(icon => {
+                    if (theme === 'dark') {
+                        icon.className = 'fa-solid fa-sun theme-icon-indicator';
+                        if (icon.nextSibling && icon.nextSibling.nodeType === 3 && icon.nextSibling.textContent.includes('Tema')) {
+                            icon.nextSibling.textContent = ' Tema Claro';
+                        }
+                    } else {
+                        icon.className = 'fa-solid fa-moon theme-icon-indicator';
+                        if (icon.nextSibling && icon.nextSibling.nodeType === 3 && icon.nextSibling.textContent.includes('Tema')) {
+                            icon.nextSibling.textContent = ' Tema Escuro';
+                        }
+                    }
+                });
+            }
+
+            function toggleTheme(e) {
+                e.preventDefault();
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            }
+
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                sidebar.classList.toggle('sidebar-open');
+                overlay.classList.toggle('active');
+            }
+
+            // Init icon and mobile display on load
+            document.addEventListener('DOMContentLoaded', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                updateThemeIcon(currentTheme);
+                
+                // Show close button in sidebar only on mobile
+                if (window.innerWidth <= 768) {
+                    const closeBtn = document.getElementById('sidebar-close-btn');
+                    if (closeBtn) closeBtn.style.display = 'block';
+                }
+            });
+        </script>
         {% block extra_js %}{% endblock %}
     </body>
 </html>

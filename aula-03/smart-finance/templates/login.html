@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Login - Financial AI Platform{% endblock %}
+{% block title %}Login - SmartFinance{% endblock %}
 {% block login_content %}
     <div class="login-container">
-        <div class="glass-panel login-card">
-            <h1>Financial AI</h1>
-            <p>Acesse a inteligência da sua plataforma</p>
+        <div class="login-card">
+            <h1>SmartFinance</h1>
+            <p>Acesse a sua plataforma financeira</p>
             {% if messages %}
                 {% for message in messages %}
-                    <div style="color: #ec4899; margin-bottom: 1rem; font-size: 0.9rem;">{{ message }}</div>
+                    <div style="color: var(--accent-red);
+                                margin-bottom: 1.25rem;
+                                font-size: 0.9rem;
+                                font-weight: 500">{{ message }}</div>
                 {% endfor %}
             {% endif %}
             <form method="POST" action="{% url 'users:login' %}">
@@ -30,14 +33,15 @@
                            required
                            placeholder="Digite sua senha">
                 </div>
-                <button type="submit" class="btn-primary">Entrar</button>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Entrar</button>
             </form>
-            <div style="margin-top: 1.5rem; font-size: 0.9rem;">
+            <div style="margin-top: 2rem; font-size: 0.95rem;">
                 <span style="color: var(--text-secondary);">Ainda não tem uma conta?</span>
                 <a href="{% url 'users:register' %}"
-                   style="color: var(--accent-1);
+                   style="color: var(--accent-blue);
                           text-decoration: none;
-                          font-weight: 600">Cadastre-se</a>
+                          font-weight: 600;
+                          margin-left: 0.25rem">Cadastre-se</a>
             </div>
         </div>
     </div>

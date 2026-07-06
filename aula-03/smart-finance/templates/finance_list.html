@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
-{% block title %}Gestão Financeira - SmartFinance AI{% endblock %}
+{% block title %}Gestão Financeira - SmartFinance{% endblock %}
 {% block content %}
     <div class="topbar">
         <h1 class="page-title">Gestão Financeira: {{ request.user.username|title }}</h1>
-        <a href="{% url 'finance:add' %}" class="btn-primary">
-            <i class="fa-solid fa-plus"></i> Nova Transação
-        </a>
+        <div class="topbar-actions">
+            <a href="{% url 'finance:add' %}" class="btn-primary">
+                <i class="fa-solid fa-plus"></i> Nova Transação
+            </a>
+        </div>
     </div>
-    <div style="display: grid;
-                grid-template-columns: 2fr 1fr;
-                gap: 1.5rem;
-                align-items: start;
-                margin-bottom: 2rem">
+    <div class="responsive-grid">
         <!-- Coluna da Esquerda: Tabela -->
-        <div class="card" style="overflow-x: auto;">
-            <h3 style="margin-bottom: 1.5rem;
-                       color: var(--text-secondary);
-                       font-size: 0.9rem">CONTAS DA FAMÍLIA</h3>
-            <h3 style="margin-bottom: 1rem;">Últimas Transações da Família</h3>
-            <table>
+        <div class="card table-container" style="border: none; padding: 0;">
+            <div style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
+                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Contas da Família</h3>
+                <h3 style="font-size: 1.1rem; font-weight: 600;">Últimas Transações</h3>
+            </div>
+            <table style="margin-top: 1rem;">
                 <thead>
                     <tr>
                         <th>Data</th>
@@ -31,7 +29,7 @@
                 <tbody>
                     {% for tx in transactions %}
                         <tr>
-                            <td>{{ tx.date|date:"d M Y" }}</td>
+                            <td style="color: var(--text-secondary); font-size: 0.9rem;">{{ tx.date|date:"d M Y" }}</td>
                             <td style="font-weight: 500;">{{ tx.description }}</td>
                             <td>{{ tx.category }}</td>
                             <td>
@@ -46,48 +44,41 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-secondary);">Nenhuma transação registrada ainda.</td>
+                            <td colspan="5"
+                                style="text-align: center;
+                                       color: var(--text-secondary);
+                                       padding: 3rem 1rem">Nenhuma transação registrada ainda.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <!-- Coluna da Direita: Chat IA -->
-        <div class="card chat-container" style="height: 600px;">
+        <div class="card chat-container">
             <div style="margin-bottom: 1rem;
                         border-bottom: 1px solid var(--border-color);
                         padding-bottom: 1rem">
                 <h3 style="font-size: 1.1rem;
+                           font-weight: 600;
                            display: flex;
                            align-items: center;
                            gap: 0.5rem">
-                    <i class="fa-solid fa-robot" style="color: var(--accent-blue);"></i> Agente Financeiro IA
+                    <i class="fa-solid fa-robot text-green"></i> Assistente Financeiro
                 </h3>
             </div>
-            <div class="chat-messages"
-                 id="chat-messages"
-                 style="flex: 1;
-                        overflow-y: auto;
-                        display: flex;
-                        flex-direction: column;
-                        gap: 1rem;
-                        padding-right: 0.5rem">
+            <div class="chat-messages" id="chat-messages">
                 <div class="message msg-ai">
-                    <strong>Agente IA</strong>
+                    <strong>Assistente IA</strong>
                     <br>
                     Olá! Sou o seu Assistente Financeiro. Quer que eu registre alguma despesa ou receita para você?
                 </div>
             </div>
-            <div class="chat-input-area"
-                 style="padding-top: 1rem;
-                        display: flex;
-                        gap: 0.5rem">
+            <div class="chat-input-area">
                 <input type="text"
                        id="chat-input"
                        class="chat-input"
-                       style="flex: 1"
                        placeholder="Ex: Gastei 50 no ifood">
-                <button id="chat-send-btn" class="btn-primary" style="padding: 0.6rem;">
+                <button id="chat-send-btn" class="btn-primary" style="padding: 0 1.25rem;">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
@@ -97,7 +88,7 @@
     {
         "apiUrl": "{% url 'intelligence:chat_api' %}",
         "csrfToken": "{{ csrf_token }}",
-        "aiName": "Agente IA",
+        "aiName": "Assistente IA",
         "reloadOnTransaction": true
     }
     </script>

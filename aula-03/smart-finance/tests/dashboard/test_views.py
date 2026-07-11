@@ -63,7 +63,9 @@ class DashboardViewsTests(TestCase):
         )
         response = self.client.get(reverse("dashboard:insight"))
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Você gastou 20.0% das receitas.", response.json()["insight"])
+        self.assertIn(
+            "Você gastou 20.0% das suas receitas.", response.json()["insight"]
+        )
 
     def test_insight_api_no_transactions(self):
         self.client.login(username="testuser", password="testpassword")
@@ -92,7 +94,10 @@ class DashboardViewsTests(TestCase):
             type="despesa",
         )
         response = self.client.get(reverse("dashboard:insight"))
-        self.assertIn("Atenção: Suas despesas > receitas!", response.json()["insight"])
+        self.assertIn(
+            "Atenção: Suas despesas estão ultrapassando suas receitas!",
+            response.json()["insight"],
+        )
 
     def test_insight_api_no_expenses(self):
         self.client.login(username="testuser", password="testpassword")

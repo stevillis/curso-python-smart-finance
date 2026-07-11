@@ -1,43 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}Assistente IA - SmartFinance AI{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="/static/css/chat_ui.css">
-{% endblock %}
-
 {% block content %}
-    <div class="chat-wrapper">
-        <div class="chat-messages" id="chat-messages">
-            
-            <div class="welcome-screen" id="welcome-screen">
-                <h2 class="welcome-title">Como posso ajudar com suas finanças hoje?</h2>
-                <div class="suggestion-pill-container">
-                    <button class="suggestion-pill" onclick="fillInput(this)">
-                        <i class="fa-solid fa-cart-shopping suggestion-icon"></i> Gasto com mercado este mês
+    <div class="relative flex-grow flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] w-full -mx-6 md:-mx-16 -my-6 md:-my-10">
+        <div class="flex-grow overflow-y-auto pt-12 px-6 md:px-12 pb-40 flex flex-col gap-8 scroll-smooth w-full max-w-[800px] mx-auto" id="chat-messages">
+
+            <div class="flex flex-col items-center justify-center min-h-[50vh] text-center w-full transition-opacity duration-300" id="welcome-screen">
+                <h2 class="text-[2.25rem] font-medium tracking-tight mb-10 text-slate-900 dark:text-slate-50">Como posso ajudar com suas finanças hoje?</h2>
+                <div class="flex gap-3 flex-wrap justify-center max-w-[600px]">
+                    <button class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-3 px-5 rounded-full text-[0.95rem] text-slate-500 dark:text-slate-400 cursor-pointer transition-all duration-200 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-slate-900 dark:hover:text-slate-50 hover:border-slate-500 hover:-translate-y-[1px]" onclick="fillInput(this)">
+                        <i class="fa-solid fa-cart-shopping text-teal-600 dark:text-teal-500"></i> Gasto com mercado este mês
                     </button>
-                    <button class="suggestion-pill" onclick="fillInput(this)">
-                        <i class="fa-solid fa-gamepad suggestion-icon"></i> Resumo de despesas com lazer
+                    <button class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-3 px-5 rounded-full text-[0.95rem] text-slate-500 dark:text-slate-400 cursor-pointer transition-all duration-200 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-slate-900 dark:hover:text-slate-50 hover:border-slate-500 hover:-translate-y-[1px]" onclick="fillInput(this)">
+                        <i class="fa-solid fa-gamepad text-teal-600 dark:text-teal-500"></i> Resumo de despesas com lazer
                     </button>
-                    <button class="suggestion-pill" onclick="fillInput(this)">
-                        <i class="fa-solid fa-arrow-trend-up suggestion-icon"></i> Minhas maiores despesas
+                    <button class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-3 px-5 rounded-full text-[0.95rem] text-slate-500 dark:text-slate-400 cursor-pointer transition-all duration-200 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-slate-900 dark:hover:text-slate-50 hover:border-slate-500 hover:-translate-y-[1px]" onclick="fillInput(this)">
+                        <i class="fa-solid fa-arrow-trend-up text-teal-600 dark:text-teal-500"></i> Minhas maiores despesas
                     </button>
                 </div>
             </div>
 
         </div>
 
-        <div class="chat-input-wrapper">
-            <div class="chat-input-inner">
-                <div class="chat-input-container">
-                    <button type="button" class="btn-icon chat-input-add-btn">
+        <div class="absolute bottom-0 left-0 right-0 pt-6 px-6 pb-8 bg-gradient-to-t from-slate-50 dark:from-slate-950 via-slate-50/70 dark:via-slate-950/70 to-transparent pointer-events-none flex justify-center items-end">
+            <div class="w-full max-w-[800px] pointer-events-auto">
+                <div class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl py-2.5 pr-2.5 pl-5 flex items-end gap-3 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.08),0_8px_10px_-6px_rgba(0,0,0,0.04)] transition-colors duration-200 focus-within:border-teal-600 dark:focus-within:border-teal-500">
+                    <button type="button" class="bg-transparent border-none p-2 text-slate-500 dark:text-slate-400 self-center -mr-1 cursor-pointer">
                         <i class="fa-solid fa-plus"></i>
                     </button>
-                    <textarea id="chat-input" class="chat-input-field" rows="1" placeholder="Pergunte qualquer coisa..."></textarea>
-                    <button id="chat-send-btn" class="btn-send-circle">
+                    <textarea id="chat-input" class="grow border-none bg-transparent resize-none py-2 font-sans text-[1rem] text-slate-900 dark:text-slate-50 leading-relaxed outline-none max-h-[150px] overflow-y-auto placeholder:text-slate-500 placeholder:dark:text-slate-400 placeholder:opacity-70 min-h-[24px]" rows="1" placeholder="Pergunte qualquer coisa..."></textarea>
+                    <button id="chat-send-btn" class="bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 border-none w-[42px] h-[42px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-150 hover:opacity-90 hover:scale-105 active:scale-95 shrink-0 self-end">
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
                 </div>
-                <div class="disclaimer-text">
+                <div class="text-center text-[0.75rem] text-slate-500 dark:text-slate-400 mt-3 opacity-80">
                     O Assistente IA pode cometer erros. Verifique as transações importadas.
                 </div>
             </div>
@@ -48,7 +44,7 @@
     {
         "apiUrl": "{% url 'intelligence:chat_api' %}",
         "csrfToken": "{{ csrf_token }}",
-        "aiName": "<i class=\"fa-solid fa-robot\"></i> Assistente",
+        "aiName": "<i class=\"fa-solid fa-robot text-teal-600 dark:text-teal-500\"></i> Assistente",
         "reloadOnTransaction": false
     }
     </script>

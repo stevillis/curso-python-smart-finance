@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}Cadastro - SmartFinance{% endblock %}
 {% block login_content %}
-    <div class="login-container">
-        <div class="login-card">
-            <h1>Criar Conta</h1>
-            <p>Junte-se à plataforma financeira</p>
+    <div class="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 md:p-12 shadow-sm max-w-[440px] w-full text-center">
+            <h1 class="text-[2rem] font-bold text-slate-900 dark:text-slate-50 tracking-tight mb-2 flex justify-center items-center gap-2"><i class="fa-solid fa-chart-pie text-teal-600 dark:text-teal-500"></i> SmartFinance</h1>
+            <p class="text-[0.95rem] text-slate-500 dark:text-slate-400 mb-8">Junte-se à plataforma financeira</p>
             {% if form.errors %}
-                <div class="auth-message-error">
+                <div class="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-500 p-4 rounded-md text-[0.9rem] mb-6 font-medium text-left">
                     {% for field in form %}
                         {% for error in field.errors %}<p class="mb-1">- {{ error }}</p>{% endfor %}
                     {% endfor %}
                     {% for error in form.non_field_errors %}<p class="mb-1">- {{ error }}</p>{% endfor %}
                 </div>
             {% endif %}
-            <form method="POST" action="{% url 'users:register' %}">
+            <form method="POST" action="{% url 'users:register' %}" class="flex flex-col gap-5 text-left">
                 {% csrf_token %}
                 {% for field in form %}
-                    <div class="form-group text-left">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="flex flex-col gap-1.5 [&_input]:bg-slate-50 [&_input]:dark:bg-slate-950 [&_input]:border [&_input]:border-slate-200 [&_input]:dark:border-slate-800 [&_input]:rounded-md [&_input]:py-2.5 [&_input]:px-3 [&_input]:text-[0.95rem] [&_input]:text-slate-900 [&_input]:dark:text-slate-50 [&_input]:outline-none [&_input]:transition-colors [&_input]:duration-200 [&_input]:w-full [&_input]:focus:border-teal-600 [&_input]:dark:focus:border-teal-500 [&_input]:font-sans [&_span.helptext]:text-[0.8rem] [&_span.helptext]:text-slate-500 [&_span.helptext]:mt-1 [&_ul]:text-[0.8rem] [&_ul]:text-slate-500 [&_ul]:mt-1 [&_ul]:list-disc [&_ul]:ml-4">
+                        <label for="{{ field.id_for_label }}" class="text-[0.9rem] font-semibold text-slate-700 dark:text-slate-300">{{ field.label }}</label>
                         {{ field }}
                     </div>
                 {% endfor %}
-                <button type="submit" class="btn-primary mt-4">Cadastrar</button>
+                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white py-3 px-5 rounded-md font-medium text-[0.95rem] transition-colors duration-150 flex items-center justify-center shadow-sm w-full mt-4 cursor-pointer border-none">Cadastrar</button>
             </form>
-            <div class="auth-footer">
-                <span class="auth-footer-text">Já possui uma conta?</span>
-                <a href="{% url 'users:login' %}" class="auth-link">Faça o login</a>
+            <div class="mt-8 text-[0.95rem]">
+                <span class="text-slate-500 dark:text-slate-400">Já possui uma conta?</span>
+                <a href="{% url 'users:login' %}" class="text-teal-600 dark:text-teal-500 font-medium no-underline hover:underline ml-1 transition-colors duration-200">Faça o login</a>
             </div>
         </div>
     </div>

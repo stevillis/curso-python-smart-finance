@@ -29,18 +29,16 @@ function toggleTheme(e) {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-    sidebar.classList.toggle('sidebar-open');
-    overlay.classList.toggle('active');
+
+    // Toggle the sidebar sliding in and out
+    sidebar.classList.toggle('left-[-100%]');
+    sidebar.classList.toggle('left-0');
+
+    // Toggle the overlay visibility
+    overlay.classList.toggle('hidden');
 }
 
-// Init icon and mobile display on load
 document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     updateThemeIcon(currentTheme);
-    
-    // Show close button in sidebar only on mobile
-    if (window.innerWidth <= 768) {
-        const closeBtn = document.getElementById('sidebar-close-btn');
-        if (closeBtn) closeBtn.style.display = 'block';
-    }
 });

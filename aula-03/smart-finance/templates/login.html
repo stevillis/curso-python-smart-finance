@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
 {% block title %}Login - SmartFinance{% endblock %}
 {% block login_content %}
-    <div class="login-container">
-        <div class="login-card">
-            <h1>SmartFinance</h1>
-            <p>Acesse a sua plataforma financeira</p>
+    <div class="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 md:p-12 shadow-sm max-w-[440px] w-full text-center">
+            <h1 class="text-[2rem] font-bold text-slate-900 dark:text-slate-50 tracking-tight mb-2 flex justify-center items-center gap-2"><i class="fa-solid fa-chart-pie text-teal-600 dark:text-teal-500"></i> SmartFinance</h1>
+            <p class="text-[0.95rem] text-slate-500 dark:text-slate-400 mb-8">Acesse a sua plataforma financeira</p>
             {% if messages %}
                 {% for message in messages %}
-                    <div class="auth-message-error">{{ message }}</div>
+                    <div class="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-500 p-3 rounded-md text-[0.9rem] mb-6 font-medium">{{ message }}</div>
                 {% endfor %}
             {% endif %}
-            <form method="POST" action="{% url 'users:login' %}">
+            <form method="POST" action="{% url 'users:login' %}" class="flex flex-col gap-5 text-left">
                 {% csrf_token %}
-                <div class="form-group text-left">
-                    <label for="username">Usuário</label>
+                <div class="flex flex-col gap-1.5">
+                    <label for="username" class="text-[0.9rem] font-semibold text-slate-700 dark:text-slate-300">Usuário</label>
                     <input type="text"
                            id="username"
                            name="username"
-                           class="form-control"
+                           class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md py-2.5 px-3 text-[0.95rem] text-slate-900 dark:text-slate-50 outline-none transition-colors duration-200 w-full focus:border-teal-600 dark:focus:border-teal-500 font-sans"
                            required
                            placeholder="Digite seu usuário">
                 </div>
-                <div class="form-group text-left">
-                    <label for="password">Senha</label>
+                <div class="flex flex-col gap-1.5">
+                    <label for="password" class="text-[0.9rem] font-semibold text-slate-700 dark:text-slate-300">Senha</label>
                     <input type="password"
                            id="password"
                            name="password"
-                           class="form-control"
+                           class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md py-2.5 px-3 text-[0.95rem] text-slate-900 dark:text-slate-50 outline-none transition-colors duration-200 w-full focus:border-teal-600 dark:focus:border-teal-500 font-sans"
                            required
                            placeholder="Digite sua senha">
                 </div>
-                <button type="submit" class="btn-primary mt-4">Entrar</button>
+                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white py-3 px-5 rounded-md font-medium text-[0.95rem] transition-colors duration-150 flex items-center justify-center shadow-sm w-full mt-4 cursor-pointer border-none">Entrar</button>
             </form>
-            <div class="auth-footer">
-                <span class="auth-footer-text">Ainda não tem uma conta?</span>
-                <a href="{% url 'users:register' %}" class="auth-link">Cadastre-se</a>
+            <div class="mt-8 text-[0.95rem]">
+                <span class="text-slate-500 dark:text-slate-400">Ainda não tem uma conta?</span>
+                <a href="{% url 'users:register' %}" class="text-teal-600 dark:text-teal-500 font-medium no-underline hover:underline ml-1 transition-colors duration-200">Cadastre-se</a>
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,9 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "corsheaders",
+    "django_browser_reload",
+    "tailwind",
+    "theme",
     # Local apps
     "dashboard",
     "intelligence",
@@ -47,7 +51,19 @@ INSTALLED_APPS = [
     "users",
 ]
 
+TAILWIND_APP_NAME = "theme"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+if sys.platform == "win32":
+    NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+else:
+    NPM_BIN_PATH = "/usr/bin/npm"
+
 MIDDLEWARE = [
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -129,6 +145,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

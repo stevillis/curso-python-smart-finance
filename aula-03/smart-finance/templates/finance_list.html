@@ -1,90 +1,90 @@
 {% extends 'base.html' %}
 {% block title %}Gestão Financeira - SmartFinance{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="/static/css/finance_list.css">{% endblock %}
+{% block extra_css %}{% endblock %}
 {% block content %}
-    <div class="topbar finance-list-topbar">
-        <h1 class="finance-list-title">Gestão Financeira</h1>
-        <div class="topbar-actions">
-            <a href="{% url 'finance:add' %}" class="btn-primary btn-primary-large">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-10">
+        <h1 class="text-[2rem] font-medium tracking-tight">Gestão Financeira</h1>
+        <div class="w-full md:w-auto">
+            <a href="{% url 'finance:add' %}" class="bg-teal-600 hover:bg-teal-700 text-white py-3 px-5 rounded-lg font-medium text-[0.9rem] transition-colors duration-150 inline-flex items-center gap-2 shadow-sm w-full md:w-auto justify-center">
                 <i class="fa-solid fa-plus"></i> Nova Transação
             </a>
         </div>
     </div>
     <!-- AI Command Bar / Registro Rápido -->
-    <div class="quick-add-section">
-        <div id="quick-add-toast" class="toast"></div>
-        <div class="quick-add-wrapper">
-            <div class="chat-input-container">
-                <i class="fa-solid fa-bolt chat-input-icon"></i>
+    <div class="mb-12 flex flex-col items-center">
+        <div id="quick-add-toast" class="hidden py-3 px-6 rounded-lg text-[0.95rem] text-center font-medium mb-4 shadow-sm opacity-0 -translate-y-2.5 transition-all duration-300"></div>
+        <div class="w-full max-w-[800px]">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl py-2.5 pr-2.5 pl-5 flex items-center gap-3 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.08),0_8px_10px_-6px_rgba(0,0,0,0.04)] focus-within:border-teal-600 dark:focus-within:border-teal-500 transition-colors duration-200">
+                <i class="fa-solid fa-bolt text-slate-500 dark:text-slate-400 text-[1.1rem] opacity-70"></i>
                 <textarea id="chat-input"
-                          class="chat-input-field"
+                          class="grow border-none bg-transparent resize-none py-2 font-sans text-[1.05rem] text-slate-900 dark:text-slate-50 leading-relaxed outline-none overflow-hidden placeholder:text-slate-500 placeholder:dark:text-slate-400 placeholder:opacity-70 min-h-[24px]"
                           rows="1"
                           placeholder="Registre transações rapidamente... (Ex: tomate 5.00, netflix 45.90)"></textarea>
-                <button id="chat-send-btn" class="btn-send-circle">
+                <button id="chat-send-btn" class="bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 border-none w-[42px] h-[42px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-150 hover:opacity-90 hover:scale-105 active:scale-95 shrink-0">
                     <i class="fa-solid fa-arrow-up"></i>
                 </button>
             </div>
-            <div class="quick-add-helper">Cole uma lista de compras ou digite os gastos separados por vírgula.</div>
+            <div class="text-center text-[0.8rem] text-slate-500 dark:text-slate-400 mt-3 opacity-80">Cole uma lista de compras ou digite os gastos separados por vírgula.</div>
         </div>
     </div>
     <!-- Tabela: Full Width -->
-    <div class="card table-card">
-        <div class="table-header">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-0 overflow-hidden flex flex-col shadow-sm">
+        <div class="px-7 py-6 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-transparent">
             <div>
-                <h3 class="table-title">Últimas Transações</h3>
-                <p class="table-subtitle">Visão geral das suas movimentações recentes.</p>
+                <h3 class="text-[1.15rem] font-semibold text-slate-900 dark:text-slate-50 tracking-tight">Últimas Transações</h3>
+                <p class="text-[0.9rem] text-slate-500 dark:text-slate-400 mt-1">Visão geral das suas movimentações recentes.</p>
             </div>
-            <div class="table-filters">
-                <div class="search-box">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" id="transaction-search" placeholder="Buscar transação...">
+            <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center w-full md:w-auto">
+                <div class="relative flex items-center w-full md:w-[250px]">
+                    <i class="fa-solid fa-search absolute left-4 text-slate-500 dark:text-slate-400 text-[0.9rem]"></i>
+                    <input type="text" id="transaction-search" placeholder="Buscar transação..." class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg py-2 pl-10 pr-4 text-slate-900 dark:text-slate-50 text-[0.9rem] outline-none transition-colors duration-200 w-full focus:border-teal-600 dark:focus:border-teal-500">
                 </div>
-                <div class="date-filter-box">
-                    <input type="date" id="start-date" class="filter-date" title="Data inicial">
+                <div class="flex flex-wrap items-center gap-2 text-slate-500 dark:text-slate-400 text-[0.9rem] w-full md:w-auto">
+                    <input type="date" id="start-date" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg py-1.5 px-2.5 text-slate-900 dark:text-slate-50 text-[0.85rem] outline-none transition-colors duration-200 font-sans focus:border-teal-600 dark:focus:border-teal-500 flex-1 md:flex-none [color-scheme:light] dark:[color-scheme:dark]" title="Data inicial">
                     <span>até</span>
-                    <input type="date" id="end-date" class="filter-date" title="Data final">
+                    <input type="date" id="end-date" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg py-1.5 px-2.5 text-slate-900 dark:text-slate-50 text-[0.85rem] outline-none transition-colors duration-200 font-sans focus:border-teal-600 dark:focus:border-teal-500 flex-1 md:flex-none [color-scheme:light] dark:[color-scheme:dark]" title="Data final">
                 </div>
-                <select id="type-filter" class="filter-select">
+                <select id="type-filter" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg py-2 px-4 text-slate-900 dark:text-slate-50 text-[0.9rem] outline-none cursor-pointer transition-colors duration-200 focus:border-teal-600 dark:focus:border-teal-500 w-full md:w-auto">
                     <option value="all">Todos os Tipos</option>
                     <option value="receita">Receitas</option>
                     <option value="despesa">Despesas</option>
                 </select>
             </div>
         </div>
-        <div class="table-wrapper">
-            <table class="finance-table">
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
                 <thead>
                     <tr>
-                        <th>DATA</th>
-                        <th>DESCRIÇÃO</th>
-                        <th>CATEGORIA</th>
-                        <th class="text-center">TIPO</th>
-                        <th class="text-right">VALOR</th>
+                        <th class="text-left py-4 px-7 text-[0.8rem] font-semibold text-slate-500 dark:text-slate-400 bg-transparent border-b border-slate-200 dark:border-slate-800">DATA</th>
+                        <th class="text-left py-4 px-7 text-[0.8rem] font-semibold text-slate-500 dark:text-slate-400 bg-transparent border-b border-slate-200 dark:border-slate-800">DESCRIÇÃO</th>
+                        <th class="text-left py-4 px-7 text-[0.8rem] font-semibold text-slate-500 dark:text-slate-400 bg-transparent border-b border-slate-200 dark:border-slate-800">CATEGORIA</th>
+                        <th class="text-center py-4 px-7 text-[0.8rem] font-semibold text-slate-500 dark:text-slate-400 bg-transparent border-b border-slate-200 dark:border-slate-800">TIPO</th>
+                        <th class="text-right py-4 px-7 text-[0.8rem] font-semibold text-slate-500 dark:text-slate-400 bg-transparent border-b border-slate-200 dark:border-slate-800">VALOR</th>
                     </tr>
                 </thead>
                 <tbody id="transaction-tbody">
                     {% for tx in transactions %}
-                        <tr class="tx-row" data-type="{{ tx.type }}">
-                            <td class="date-col">{{ tx.date|date:"d M Y" }}</td>
-                            <td class="desc-col">{{ tx.description }}</td>
-                            <td class="cat-col">{{ tx.category }}</td>
-                            <td class="type-col">
+                        <tr class="tx-row transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-slate-950" data-type="{{ tx.type }}">
+                            <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem] last:border-b-0">{{ tx.date|date:"d M Y" }}</td>
+                            <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-50 last:border-b-0">{{ tx.description }}</td>
+                            <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem] last:border-b-0">{{ tx.category }}</td>
+                            <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-center last:border-b-0">
                                 {% if tx.type == 'receita' %}
-                                    <span class="badge badge-income badge-type">Receita</span>
+                                    <span class="py-1.5 px-2.5 rounded-md text-[0.75rem] font-semibold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-500">Receita</span>
                                 {% else %}
-                                    <span class="badge badge-expense badge-type">Despesa</span>
+                                    <span class="py-1.5 px-2.5 rounded-md text-[0.75rem] font-semibold uppercase tracking-wider bg-red-500/10 text-red-600 dark:text-red-500">Despesa</span>
                                 {% endif %}
                             </td>
-                            <td class="val-col {% if tx.type == 'receita' %}text-green{% else %}text-red{% endif %}">
+                            <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-semibold text-right last:border-b-0 {% if tx.type == 'receita' %}text-green-600 dark:text-green-500{% else %}text-red-600 dark:text-red-500{% endif %}">
                                 R$ {{ tx.amount|floatformat:2 }}
                             </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5" class="empty-state">
-                                <div class="empty-state-content">
-                                    <i class="fa-solid fa-receipt empty-state-icon"></i>
-                                    <p class="empty-state-text">Nenhuma transação registrada ainda.</p>
+                            <td colspan="5" class="text-center text-slate-500 dark:text-slate-400 py-16 px-4">
+                                <div class="flex flex-col items-center gap-3">
+                                    <i class="fa-solid fa-receipt text-[2.5rem] opacity-30"></i>
+                                    <p class="text-[0.95rem]">Nenhuma transação registrada ainda.</p>
                                 </div>
                             </td>
                         </tr>
@@ -92,16 +92,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="table-footer" id="pagination-container">
-            <div class="pagination-info">
+        <div class="flex justify-between items-center py-5 px-7 border-t border-slate-200 dark:border-slate-800 bg-transparent" id="pagination-container">
+            <div class="text-[0.9rem] text-slate-500 dark:text-slate-400">
                 Mostrando <span id="page-start">0</span> a <span id="page-end">0</span> de <span id="total-items">0</span>
             </div>
-            <div class="pagination-controls">
-                <button id="prev-page" class="btn-page">
+            <div class="flex items-center gap-2">
+                <button id="prev-page" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-50 w-8 h-8 rounded-md flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <div id="page-numbers" class="page-numbers"></div>
-                <button id="next-page" class="btn-page">
+                <div id="page-numbers" class="flex gap-1 page-numbers-tw"></div>
+                <button id="next-page" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-50 w-8 h-8 rounded-md flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>

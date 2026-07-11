@@ -37,10 +37,10 @@ def insight_api(request):
     total_expense = sum(t.amount for t in transactions if t.type == "despesa")
 
     if total_expense > total_income:
-        insight = "Atenção: Suas despesas > receitas!"
+        insight = "Atenção: Suas despesas estão ultrapassando suas receitas!"
     elif total_expense > 0:
         pct = (total_expense / total_income) * 100 if total_income > 0 else 100
-        insight = f"Você gastou {pct:.1f}% das receitas."
+        insight = f"Você gastou {pct:.1f}% das suas receitas."
     else:
         insight = "Sem despesas registradas!"
 

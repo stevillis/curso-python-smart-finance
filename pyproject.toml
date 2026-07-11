@@ -6,7 +6,9 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "django==5.0.1",
+    "django-browser-reload==1.18.0",
     "django-cors-headers>=4.9.0",
+    "django-tailwind==4.0.1",
     "djangorestframework>=3.17.1",
     "groq>=1.5.0",
     "pillow>=12.2.0",
@@ -17,6 +19,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "cookiecutter",
     "coverage==7.6.12",
     "djlint==1.36.4",
     "pre-commit==3.4.0",

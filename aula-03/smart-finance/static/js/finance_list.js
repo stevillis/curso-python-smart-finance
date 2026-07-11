@@ -62,10 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (transactions.length === 0) {
             tbody.innerHTML = `
-                <tr class="search-empty-state">
-                    <td colspan="5" style="text-align: center; padding: 4rem 1rem; color: var(--text-secondary);">
-                        <i class="fa-solid fa-magnifying-glass" style="font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                        <p style="font-size: 0.95rem;">Nenhuma transação encontrada.</p>
+                <tr>
+                    <td colspan="5" class="text-center text-slate-500 dark:text-slate-400 py-16 px-4">
+                        <div class="flex flex-col items-center gap-3">
+                            <i class="fa-solid fa-magnifying-glass text-[2.5rem] opacity-30"></i>
+                            <p class="text-[0.95rem]">Nenhuma transação encontrada.</p>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -74,21 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         transactions.forEach(tx => {
             const tr = document.createElement('tr');
-            tr.className = 'tx-row';
+            tr.className = 'tx-row transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-slate-950';
             tr.setAttribute('data-type', tx.type);
 
-            const badgeClass = tx.type === 'receita' ? 'badge-income' : 'badge-expense';
+            const badgeClass = tx.type === 'receita' ? 'bg-green-500/10 text-green-600 dark:text-green-500' : 'bg-red-500/10 text-red-600 dark:text-red-500';
             const badgeText = tx.type === 'receita' ? 'Receita' : 'Despesa';
-            const textClass = tx.type === 'receita' ? 'text-green' : 'text-red';
+            const textClass = tx.type === 'receita' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500';
 
             tr.innerHTML = `
-                <td class="date-col">${tx.date}</td>
-                <td class="desc-col">${tx.description}</td>
-                <td class="cat-col">${tx.category}</td>
-                <td class="type-col">
-                    <span class="badge ${badgeClass} badge-type">${badgeText}</span>
+                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem]">${tx.date}</td>
+                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-50">${tx.description}</td>
+                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem]">${tx.category}</td>
+                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-center">
+                    <span class="py-1.5 px-2.5 rounded-md text-[0.75rem] font-semibold uppercase tracking-wider ${badgeClass}">${badgeText}</span>
                 </td>
-                <td class="val-col ${textClass}">
+                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-semibold text-right ${textClass}">
                     ${tx.amount_formatted}
                 </td>
             `;
@@ -118,7 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (let i = startPage; i <= endPage; i++) {
                 const btn = document.createElement('button');
-                btn.className = `btn-page-num ${i === pagination.current_page ? 'active' : ''}`;
+                const activeClass = i === pagination.current_page ? 'bg-teal-600 text-white font-medium border-teal-600' : 'bg-transparent border-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-slate-900 dark:hover:text-slate-50';
+                btn.className = `w-8 h-8 rounded-md flex items-center justify-center cursor-pointer transition-all duration-200 text-[0.9rem] border ${activeClass}`;
                 btn.textContent = i;
                 btn.addEventListener('click', () => {
                     if (i !== pagination.current_page) {

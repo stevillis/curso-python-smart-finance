@@ -11,79 +11,82 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
         </script>
-        <link rel="stylesheet" href="/static/css/style.css">
-        {% block extra_css %}{% endblock %}
+        {% load tailwind_tags %}
+        {% tailwind_css %}
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-    <body>
+    <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 min-h-screen leading-relaxed antialiased transition-colors duration-300 ease-in-out">
         {% if request.user.is_authenticated %}
-            <div class="app-layout">
-                <div class="sidebar-overlay"
+            <div class="flex h-screen overflow-hidden">
+                <div class="hidden fixed inset-0 bg-black/50 z-[90] backdrop-blur-[2px]"
                      id="sidebar-overlay"
                      onclick="toggleSidebar()"></div>
-                <aside class="sidebar" id="sidebar">
-                    <div class="brand">
-                        <i class="fa-solid fa-chart-pie"></i> SmartFinance
-                        <button class="btn-icon sidebar-close-btn"
+                <aside class="w-[260px] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 py-8 px-6 flex flex-col transition-all duration-300 ease-in-out fixed left-[-100%] top-0 bottom-0 z-[100] shadow-md md:static md:shadow-none" id="sidebar">
+                    <div class="text-xl font-bold flex items-center gap-2 mb-12 tracking-tight">
+                        <i class="fa-solid fa-chart-pie text-teal-600 dark:text-teal-500 text-[1.1rem]"></i> SmartFinance
+                        <button class="ml-auto flex bg-transparent border-none text-slate-900 dark:text-slate-50 text-xl cursor-pointer md:hidden items-center justify-center"
                                 onclick="toggleSidebar()"
                                 id="sidebar-close-btn">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
-                    <ul class="nav-links">
+                    <ul class="list-none flex flex-col gap-1">
                         <li>
                             <a href="{% url 'dashboard:home' %}"
-                               class="{% if request.resolver_match.app_name == 'dashboard' %}active{% endif %}">
-                                <i class="fa-solid fa-house"></i> Dashboard
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950 {% if request.resolver_match.app_name == 'dashboard' %}bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-semibold{% endif %}">
+                                <i class="fa-solid fa-house w-5 text-center text-[1.1rem]"></i> Dashboard
                             </a>
                         </li>
                         <li>
                             <a href="{% url 'finance:list' %}"
-                               class="{% if request.resolver_match.app_name == 'finance' %}active{% endif %}">
-                                <i class="fa-solid fa-wallet"></i> Finanças
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950 {% if request.resolver_match.app_name == 'finance' %}bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-semibold{% endif %}">
+                                <i class="fa-solid fa-wallet w-5 text-center text-[1.1rem]"></i> Finanças
                             </a>
                         </li>
                         <li>
                             <a href="{% url 'intelligence:chat' %}"
-                               class="{% if request.resolver_match.app_name == 'intelligence' %}active{% endif %}">
-                                <i class="fa-solid fa-robot"></i> Assistente IA
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950 {% if request.resolver_match.app_name == 'intelligence' %}bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-semibold{% endif %}">
+                                <i class="fa-solid fa-robot w-5 text-center text-[1.1rem]"></i> Assistente IA
                             </a>
                         </li>
                     </ul>
-                    <ul class="nav-links" style="margin-top: auto;">
+                    <ul class="list-none flex flex-col gap-1 mt-auto">
                         <li>
-                            <a href="#" onclick="toggleTheme(event)">
-                                <i class="fa-solid fa-moon theme-icon-indicator"></i> Tema Escuro
+                            <a href="#" onclick="toggleTheme(event)"
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950">
+                                <i class="fa-solid fa-moon theme-icon-indicator w-5 text-center text-[1.1rem]"></i> Tema Escuro
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fa-solid fa-gear"></i> Configurações
+                            <a href="#"
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950">
+                                <i class="fa-solid fa-gear w-5 text-center text-[1.1rem]"></i> Configurações
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'users:logout' %}">
-                                <i class="fa-solid fa-right-from-bracket"></i> Sair
+                            <a href="{% url 'users:logout' %}"
+                               class="text-slate-500 dark:text-slate-400 font-medium text-[0.925rem] flex items-center gap-3 py-2.5 px-3 rounded-md transition-all duration-150 ease-in-out hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950">
+                                <i class="fa-solid fa-right-from-bracket w-5 text-center text-[1.1rem]"></i> Sair
                             </a>
                         </li>
                     </ul>
                 </aside>
-                <main class="main-content">
-                    <div class="mobile-header">
-                        <button onclick="toggleSidebar()" class="btn-icon">
+                <main class="flex-1 min-w-0 py-6 px-6 md:py-10 md:px-16 overflow-y-auto overflow-x-hidden">
+                    <div class="flex items-center gap-4 pb-6 mb-6 border-b border-slate-200 dark:border-slate-800 md:hidden">
+                        <button onclick="toggleSidebar()" class="bg-transparent border-none text-slate-900 dark:text-slate-50 text-xl cursor-pointer flex items-center justify-center">
                             <i class="fa-solid fa-bars"></i>
                         </button>
-                        <span class="mobile-brand">SmartFinance</span>
+                        <span class="text-[1.1rem] font-semibold tracking-tight">SmartFinance</span>
                     </div>
                     {% block content %}{% endblock %}
                 </main>
             </div>
         {% else %}
-            <div class="global-theme-toggle">
+            <div class="absolute top-6 right-6 z-[100]">
                 <button onclick="toggleTheme(event)"
-                        class="btn-icon theme-toggle theme-toggle-floating"
+                        class="bg-transparent border-none text-slate-500 dark:text-slate-400 cursor-pointer text-xl flex items-center justify-center transition-colors duration-150 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-950 p-2 rounded-full w-10 h-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm"
                         title="Alternar Tema">
                     <i class="fa-solid fa-moon theme-icon-indicator"></i>
                 </button>

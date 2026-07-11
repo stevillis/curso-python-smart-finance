@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (chatBox) {
             chatBox.innerHTML += `
-                <div class="message msg-user">
-                    <strong>Você</strong><br>${msg}
+                <div class="max-w-[80%] p-5 text-[1rem] leading-relaxed rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 border border-slate-200 dark:border-slate-800 self-end rounded-br-sm shadow-sm animate-[fadeIn_0.3s_ease-out]">
+                    ${msg}
                 </div>
             `;
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             toast.textContent = "Processando registros...";
             toast.className = "toast toast-loading show";
         }
-        
+
         inputElement.value = '';
 
         const formData = new FormData();
@@ -44,8 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (chatBox) {
                     chatBox.innerHTML += `
-                    <div class="message msg-ai">
-                        <strong>${config.aiName || 'Agente IA'}</strong><br>${data.reply}
+                    <div class="max-w-full text-[1rem] leading-relaxed text-slate-900 dark:text-slate-50 self-start animate-[fadeIn_0.3s_ease-out]">
+                        <strong class="flex items-center gap-2.5 text-[1rem] mb-3 font-semibold">${config.aiName || 'Agente IA'}</strong>
+                        ${data.reply}
                     </div>
                     `;
                     chatBox.scrollTop = chatBox.scrollHeight;
@@ -62,30 +63,30 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (emptyRow) {
                             tbody.innerHTML = '';
                         }
-                        
+
                         data.transactions.forEach(tx => {
                             const tr = document.createElement('tr');
                             tr.style.opacity = '0';
                             tr.style.transition = 'opacity 0.5s ease-in';
                             tr.style.backgroundColor = 'var(--bg-main)';
-                            
-                            const badge = tx.type === 'receita' 
-                                ? '<span class="badge badge-income">Receita</span>' 
-                                : '<span class="badge badge-expense">Despesa</span>';
-                                
-                            const amountClass = tx.type === 'receita' ? 'text-green' : 'text-red';
+
+                            const badge = tx.type === 'receita'
+                                ? '<span class="py-1.5 px-2.5 rounded-md text-[0.75rem] font-semibold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-500">Receita</span>'
+                                : '<span class="py-1.5 px-2.5 rounded-md text-[0.75rem] font-semibold uppercase tracking-wider bg-red-500/10 text-red-600 dark:text-red-500">Despesa</span>';
+
+                            const amountClass = tx.type === 'receita' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500';
                             const amountFormatted = parseFloat(tx.amount).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            
+
                             tr.innerHTML = `
-                                <td style="color: var(--text-secondary); font-size: 0.9rem;">${tx.date}</td>
-                                <td style="font-weight: 500;">${tx.description}</td>
-                                <td>${tx.category}</td>
-                                <td style="text-align: center;">${badge}</td>
-                                <td class="${amountClass}" style="font-weight: 600; text-align: right">R$ ${amountFormatted}</td>
+                                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem] last:border-b-0">${tx.date}</td>
+                                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-50 last:border-b-0">${tx.description}</td>
+                                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[0.95rem] last:border-b-0">${tx.category}</td>
+                                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 text-center last:border-b-0">${badge}</td>
+                                <td class="py-4 px-7 border-b border-slate-200 dark:border-slate-800 font-semibold text-right last:border-b-0 ${amountClass}">R$ ${amountFormatted}</td>
                             `;
-                            
+
                             tbody.insertBefore(tr, tbody.firstChild);
-                            
+
                             setTimeout(() => {
                                 tr.style.opacity = '1';
                                 setTimeout(() => {

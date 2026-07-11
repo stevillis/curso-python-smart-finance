@@ -1,48 +1,48 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard - SmartFinance{% endblock %}
 {% block content %}
-    <div class="topbar">
-        <h1 class="page-title">Bem-vindo, {{ request.user.username|title }}</h1>
-        <div class="topbar-actions">
-            <a href="{% url 'finance:add' %}" class="btn-primary">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-10">
+        <h1 class="text-[1.75rem] font-semibold tracking-tight text-slate-900 dark:text-slate-50">Bem-vindo, {{ request.user.username|title }}</h1>
+        <div class="flex items-center gap-4 w-full md:w-auto">
+            <a href="{% url 'finance:add' %}" class="bg-teal-600 hover:bg-teal-700 text-white py-2.5 px-5 rounded-md font-medium text-[0.9rem] transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-sm w-full md:w-auto">
                 <i class="fa-solid fa-plus"></i> Nova Transação
             </a>
         </div>
     </div>
-    <div class="grid-metrics">
-        <div class="card metric-card">
-            <span class="metric-title">Saldo Atual</span>
-            <span class="metric-value">R$ {{ current_balance|floatformat:2 }}</span>
+    <div class="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-5 px-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col gap-1.5">
+            <span class="text-slate-500 dark:text-slate-400 text-[0.85rem] font-medium uppercase tracking-wider">Saldo Atual</span>
+            <span class="text-[1.875rem] font-semibold tracking-tight text-slate-900 dark:text-slate-50">R$ {{ current_balance|floatformat:2 }}</span>
         </div>
-        <div class="card metric-card">
-            <span class="metric-title">Receitas</span>
-            <span class="metric-value text-green">R$ {{ total_income|floatformat:2 }}</span>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-5 px-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col gap-1.5">
+            <span class="text-slate-500 dark:text-slate-400 text-[0.85rem] font-medium uppercase tracking-wider">Receitas</span>
+            <span class="text-[1.875rem] font-semibold tracking-tight text-green-600 dark:text-green-500">R$ {{ total_income|floatformat:2 }}</span>
         </div>
-        <div class="card metric-card">
-            <span class="metric-title">Despesas</span>
-            <span class="metric-value text-red">R$ {{ total_expense|floatformat:2 }}</span>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-5 px-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col gap-1.5">
+            <span class="text-slate-500 dark:text-slate-400 text-[0.85rem] font-medium uppercase tracking-wider">Despesas</span>
+            <span class="text-[1.875rem] font-semibold tracking-tight text-red-600 dark:text-red-500">R$ {{ total_expense|floatformat:2 }}</span>
         </div>
-        <div class="card metric-card ai-insight-card">
-            <span class="ai-insight-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Insight da IA</span>
-            <span class="ai-insight-content" id="ai-insight">Analisando suas finanças...</span>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-t-[3px] border-t-teal-600 dark:border-t-teal-500 rounded-lg py-5 px-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col gap-1.5 lg:col-span-1">
+            <span class="text-teal-600 dark:text-teal-500 text-[0.85rem] font-semibold flex items-center gap-1.5 uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles"></i> Insight da IA</span>
+            <span class="text-[0.95rem] font-normal mt-2 leading-relaxed text-slate-900 dark:text-slate-50" id="ai-insight">Analisando suas finanças...</span>
         </div>
     </div>
-    <div class="responsive-grid">
-        <div class="card dashboard-chart-card">
+    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-8">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col">
             <div>
-                <h3 class="metric-title dashboard-chart-title">Evolução do Saldo</h3>
-                <p class="dashboard-chart-subtitle">Crescimento do patrimônio nos últimos 5 meses</p>
+                <h3 class="text-slate-500 dark:text-slate-400 text-[0.85rem] font-medium uppercase tracking-wider mb-1">Evolução do Saldo</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-[0.85rem] mb-6">Crescimento do patrimônio nos últimos 5 meses</p>
             </div>
-            <div class="dashboard-chart-container">
+            <div class="relative flex-grow min-h-[220px]">
                 <canvas id="cashflowChart"></canvas>
             </div>
         </div>
-        <div class="card dashboard-chart-card">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm transition-colors duration-300 ease-in-out min-w-0 flex flex-col">
             <div>
-                <h3 class="metric-title dashboard-chart-title">Receitas vs. Despesas</h3>
-                <p class="dashboard-chart-subtitle">Comparativo financeiro do mês atual</p>
+                <h3 class="text-slate-500 dark:text-slate-400 text-[0.85rem] font-medium uppercase tracking-wider mb-1">Receitas vs. Despesas</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-[0.85rem] mb-6">Comparativo financeiro do mês atual</p>
             </div>
-            <div class="dashboard-chart-container">
+            <div class="relative flex-grow min-h-[220px]">
                 <canvas id="donutChart"></canvas>
             </div>
         </div>

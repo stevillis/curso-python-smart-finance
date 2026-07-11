@@ -1,7 +1,8 @@
-import os
-import json
 import ast
+import decimal
+import json
 import operator
+import os
 from datetime import datetime
 
 from django.shortcuts import render
@@ -177,7 +178,7 @@ def chat_api(request):
 
     user_message = request.POST.get("message", "")
 
-    system_prompt = f"""
+    system_prompt = """
 Você é o SmartFinance AI, um analista financeiro de dados mestre em SQL (PostgreSQL).
 Sua tarefa é analisar a solicitação do usuário e gerar uma query SQL para encontrar a resposta exata.
 
@@ -192,10 +193,10 @@ Esquema da tabela:
 - type (VARCHAR) - Tipo ('receita' ou 'despesa')
 
 Você DEVE retornar um JSON rigorosamente com a seguinte estrutura:
-{{
-  "query": "Sua query SQL começando com SELECT. EXTREMAMENTE IMPORTANTE: Você DEVE incluir a cláusula WHERE user_id = {{user_id}} para segurança. (ex: SELECT SUM(amount) FROM finance_transaction WHERE user_id = {{user_id}} AND description ILIKE '%tomate%')",
-  "reply": "O texto da sua resposta em formato amigável (use HTML para formatar, ex: <b>negrito</b>, <br>). Use a tag {{result}} onde o resultado numérico da query deve ser injetado. (ex: Você gastou um total de <b>R$ {{result}}</b> com tomate.)"
-}}
+{
+  "query": "Sua query SQL começando com SELECT. EXTREMAMENTE IMPORTANTE: Você DEVE incluir a cláusula WHERE user_id = {user_id} para segurança. (ex: SELECT SUM(amount) FROM finance_transaction WHERE user_id = {user_id} AND description ILIKE '%tomate%')",
+  "reply": "O texto da sua resposta em formato amigável (use HTML para formatar, ex: <b>negrito</b>, <br>). Use a tag {result} onde o resultado numérico da query deve ser injetado. (ex: Você gastou um total de <b>R$ {result}</b> com tomate.)"
+}
 
 Se a pergunta não precisar de uma consulta ao banco de dados, deixe "query" vazio ("") e responda normalmente em "reply".
 Sempre faça buscas insensíveis a maiúsculas/minúsculas usando ILIKE '%termo%' quando procurar por descrições.
@@ -244,7 +245,8 @@ Sempre faça buscas insensíveis a maiúsculas/minúsculas usando ILIKE '%termo%
 
                     if row and row[0] is not None:
                         val = row[0]
-                        if isinstance(val, (int, float)):
+
+                        if isinstance(val, (int, float, decimal.Decimal)):
                             # Format nicely to Brazilian currency style
                             val_str = (
                                 f"{val:,.2f}".replace(",", "X")

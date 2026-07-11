@@ -21,5 +21,6 @@ dev = [
     "djlint==1.36.4",
     "pre-commit==3.4.0",
     "pytest==8.0.0",
+    "pytest-django>=4.12.0",
     "ruff==0.14.10",
 ]

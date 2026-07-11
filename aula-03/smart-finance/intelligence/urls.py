@@ -6,4 +6,5 @@ app_name = "intelligence"
 urlpatterns = [
     path("chat/", views.chat_view, name="chat"),
     path("api/chat/", views.chat_api, name="chat_api"),
+    path("api/quick-add/", views.quick_add_api, name="quick_add_api"),
 ]

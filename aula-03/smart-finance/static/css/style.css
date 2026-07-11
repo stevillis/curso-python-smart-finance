@@ -68,7 +68,8 @@ body {
 /* Sidebar & Layout */
 .app-layout {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -604,4 +605,114 @@ tr:hover td {
     .sidebar-overlay.active {
         display: block;
     }
+}
+
+/* Base HTML Utilities */
+.sidebar-close-btn {
+    margin-left: auto;
+    display: none;
+}
+
+.theme-toggle-floating {
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Dashboard Utilities */
+.dashboard-chart-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-chart-title {
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-chart-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-chart-container {
+    position: relative;
+    flex-grow: 1;
+    min-height: 220px;
+}
+
+/* Forms & Layout Utilities */
+.form-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
+.radio-group-container {
+    margin-bottom: 2.5rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.75rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-block-large {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem;
+}
+
+/* Auth Screen Utilities */
+.auth-message-error {
+    color: var(--accent-red);
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.auth-footer {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+}
+
+.auth-footer-text {
+    color: var(--text-secondary);
+}
+
+.auth-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 0.25rem;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
 }

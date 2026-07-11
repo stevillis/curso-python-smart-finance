@@ -4,10 +4,7 @@
     <div class="topbar">
         <h1 class="page-title">Registrar Movimentação</h1>
     </div>
-    <div class="card"
-         style="max-width: 600px;
-                margin: 0 auto;
-                padding: 2.5rem">
+    <div class="card form-card">
         <form method="POST" action="{% url 'finance:add' %}">
             {% csrf_token %}
             <div class="form-group">
@@ -42,32 +39,20 @@
                     <option value="Outros">Outros</option>
                 </select>
             </div>
-            <div class="form-group" style="margin-bottom: 2.5rem;">
+            <div class="form-group radio-group-container">
                 <label>Tipo de Movimentação</label>
-                <div style="display: flex; gap: 1.5rem; margin-top: 0.75rem;">
-                    <label style="display: flex;
-                                  align-items: center;
-                                  gap: 0.5rem;
-                                  cursor: pointer;
-                                  font-weight: 500">
+                <div class="radio-group">
+                    <label class="radio-label">
                         <input type="radio" name="type" value="receita" required>
                         Receita
                     </label>
-                    <label style="display: flex;
-                                  align-items: center;
-                                  gap: 0.5rem;
-                                  cursor: pointer;
-                                  font-weight: 500">
+                    <label class="radio-label">
                         <input type="radio" name="type" value="despesa" required>
                         Despesa
                     </label>
                 </div>
             </div>
-            <button type="submit"
-                    class="btn-primary"
-                    style="width: 100%;
-                           justify-content: center;
-                           padding: 0.875rem">Salvar Transação</button>
+            <button type="submit" class="btn-primary btn-block-large">Salvar Transação</button>
         </form>
     </div>
 {% endblock %}

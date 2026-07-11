@@ -1,96 +1,95 @@
 {% extends 'base.html' %}
 {% block title %}Gestão Financeira - SmartFinance{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/finance_list.css">
+{% endblock %}
+
 {% block content %}
-    <div class="topbar">
-        <h1 class="page-title">Gestão Financeira: {{ request.user.username|title }}</h1>
+    <div class="topbar finance-list-topbar">
+        <h1 class="finance-list-title">Gestão Financeira</h1>
         <div class="topbar-actions">
-            <a href="{% url 'finance:add' %}" class="btn-primary">
+            <a href="{% url 'finance:add' %}" class="btn-primary btn-primary-large">
                 <i class="fa-solid fa-plus"></i> Nova Transação
             </a>
         </div>
     </div>
-    <div class="responsive-grid">
-        <!-- Coluna da Esquerda: Tabela -->
-        <div class="card table-container" style="border: none; padding: 0;">
-            <div style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
-                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Contas da Família</h3>
-                <h3 style="font-size: 1.1rem; font-weight: 600;">Últimas Transações</h3>
+    
+    <!-- AI Command Bar / Registro Rápido -->
+    <div class="quick-add-section">
+        <div id="quick-add-toast" class="toast"></div>
+        <div class="quick-add-wrapper">
+            <div class="chat-input-container">
+                <i class="fa-solid fa-bolt chat-input-icon"></i>
+                <textarea id="chat-input"
+                          class="chat-input-field"
+                          rows="1"
+                          placeholder="Registre transações rapidamente... (Ex: tomate 5.00, netflix 45.90)"></textarea>
+                <button id="chat-send-btn" class="btn-send-circle">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
             </div>
-            <table style="margin-top: 1rem; width: 100%;">
+            <div class="quick-add-helper">Cole uma lista de compras ou digite os gastos separados por vírgula.</div>
+        </div>
+    </div>
+    
+    <!-- Tabela: Full Width -->
+    <div class="card table-card">
+        <div class="table-header">
+            <div>
+                <h3 class="table-title">Últimas Transações</h3>
+                <p class="table-subtitle">Visão geral das suas movimentações recentes.</p>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="finance-table">
                 <thead>
                     <tr>
-                        <th style="text-align: left;">Data</th>
-                        <th style="text-align: left;">Descrição</th>
-                        <th style="text-align: left;">Categoria</th>
-                        <th style="text-align: center;">Tipo</th>
-                        <th style="text-align: right;">Valor</th>
+                        <th>DATA</th>
+                        <th>DESCRIÇÃO</th>
+                        <th>CATEGORIA</th>
+                        <th class="text-center">TIPO</th>
+                        <th class="text-right">VALOR</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for tx in transactions %}
                         <tr>
-                            <td style="color: var(--text-secondary); font-size: 0.9rem;">{{ tx.date|date:"d M Y" }}</td>
-                            <td style="font-weight: 500;">{{ tx.description }}</td>
-                            <td>{{ tx.category }}</td>
-                            <td style="text-align: center;">
+                            <td class="date-col">{{ tx.date|date:"d M Y" }}</td>
+                            <td class="desc-col">{{ tx.description }}</td>
+                            <td class="cat-col">{{ tx.category }}</td>
+                            <td class="type-col">
                                 {% if tx.type == 'receita' %}
-                                    <span class="badge badge-income">Receita</span>
+                                    <span class="badge badge-income badge-type">Receita</span>
                                 {% else %}
-                                    <span class="badge badge-expense">Despesa</span>
+                                    <span class="badge badge-expense badge-type">Despesa</span>
                                 {% endif %}
                             </td>
-                            <td class="{% if tx.type == 'receita' %}text-green{% else %}text-red{% endif %}"
-                                style="font-weight: 600;
-                                       text-align: right">R$ {{ tx.amount|floatformat:2 }}</td>
+                            <td class="val-col {% if tx.type == 'receita' %}text-green{% else %}text-red{% endif %}">
+                                R$ {{ tx.amount|floatformat:2 }}
+                            </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5"
-                                style="text-align: center;
-                                       color: var(--text-secondary);
-                                       padding: 3rem 1rem">Nenhuma transação registrada ainda.</td>
+                            <td colspan="5" class="empty-state">
+                                <div class="empty-state-content">
+                                    <i class="fa-solid fa-receipt empty-state-icon"></i>
+                                    <p class="empty-state-text">Nenhuma transação registrada ainda.</p>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        <!-- Coluna da Direita: Chat IA -->
-        <div class="card chat-container">
-            <div style="margin-bottom: 1rem;
-                        border-bottom: 1px solid var(--border-color);
-                        padding-bottom: 1rem">
-                <h3 style="font-size: 1.1rem;
-                           font-weight: 600;
-                           display: flex;
-                           align-items: center;
-                           gap: 0.5rem">
-                    <i class="fa-solid fa-robot text-green"></i> Assistente Financeiro
-                </h3>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="message msg-ai">
-                    <strong>Assistente IA</strong>
-                    <br>
-                    Olá! Sou o seu Assistente Financeiro. Quer que eu registre alguma despesa ou receita para você?
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text"
-                       id="chat-input"
-                       class="chat-input"
-                       placeholder="Ex: Gastei 50 no ifood">
-                <button id="chat-send-btn" class="btn-primary" style="padding: 0 1.25rem;">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
     </div>
+    
     <script id="chat-config" type="application/json">
     {
-        "apiUrl": "{% url 'intelligence:chat_api' %}",
+        "apiUrl": "{% url 'intelligence:quick_add_api' %}",
         "csrfToken": "{{ csrf_token }}",
-        "aiName": "Assistente IA",
-        "reloadOnTransaction": true
+        "aiName": "Registro Rápido",
+        "reloadOnTransaction": false
     }
     </script>
 {% endblock %}

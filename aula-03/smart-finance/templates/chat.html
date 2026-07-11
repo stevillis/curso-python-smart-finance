@@ -1,36 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}Assistente IA - SmartFinance AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/chat_ui.css">
+{% endblock %}
+
 {% block content %}
-    <div class="topbar">
-        <h1 class="page-title">
-            <i class="fa-solid fa-robot" style="color: var(--accent-blue);"></i> Assistente Financeiro IA
-        </h1>
-    </div>
-    <div class="card chat-container">
+    <div class="chat-wrapper">
         <div class="chat-messages" id="chat-messages">
-            <div class="message msg-ai">
-                <strong>Agente Financeiro IA</strong>
-                <br>
-                Olá! Eu sou o seu Assistente Financeiro IA. Como posso ajudar com suas finanças hoje?
+            
+            <div class="welcome-screen" id="welcome-screen">
+                <h2 class="welcome-title">Como posso ajudar com suas finanças hoje?</h2>
+                <div class="suggestion-pill-container">
+                    <button class="suggestion-pill" onclick="fillInput(this)">
+                        <i class="fa-solid fa-cart-shopping suggestion-icon"></i> Gasto com mercado este mês
+                    </button>
+                    <button class="suggestion-pill" onclick="fillInput(this)">
+                        <i class="fa-solid fa-gamepad suggestion-icon"></i> Resumo de despesas com lazer
+                    </button>
+                    <button class="suggestion-pill" onclick="fillInput(this)">
+                        <i class="fa-solid fa-arrow-trend-up suggestion-icon"></i> Minhas maiores despesas
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="chat-input-wrapper">
+            <div class="chat-input-inner">
+                <div class="chat-input-container">
+                    <button type="button" class="btn-icon chat-input-add-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <textarea id="chat-input" class="chat-input-field" rows="1" placeholder="Pergunte qualquer coisa..."></textarea>
+                    <button id="chat-send-btn" class="btn-send-circle">
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                </div>
+                <div class="disclaimer-text">
+                    O Assistente IA pode cometer erros. Verifique as transações importadas.
+                </div>
             </div>
         </div>
-        <div class="chat-input-area">
-            <input type="text"
-                   id="chat-input"
-                   class="chat-input"
-                   placeholder="Pergunte sobre seus gastos, peça dicas de economia...">
-            <button id="chat-send-btn" class="btn-primary">
-                <i class="fa-solid fa-paper-plane"></i> Enviar
-            </button>
-        </div>
     </div>
+
     <script id="chat-config" type="application/json">
     {
         "apiUrl": "{% url 'intelligence:chat_api' %}",
         "csrfToken": "{{ csrf_token }}",
-        "aiName": "Agente Financeiro IA",
+        "aiName": "<i class=\"fa-solid fa-robot\"></i> Assistente",
         "reloadOnTransaction": false
     }
     </script>
 {% endblock %}
-{% block extra_js %}<script src="/static/js/chat.js"></script>{% endblock %}
+{% block extra_js %}
+<script src="/static/js/chat.js"></script>
+<script src="/static/js/chat_ui.js"></script>
+{% endblock %}

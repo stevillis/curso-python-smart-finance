@@ -1,0 +1,232 @@
+/* Immersive Chat Layout Adjustments */
+.main-content {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.chat-wrapper {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 3rem 1.5rem 10rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Redefine message bubbles for a modern AI aesthetic (like Gemini/Claude) */
+.message {
+    max-width: 80% !important;
+    padding: 1.25rem 1.5rem !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    border-radius: 20px !important;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.msg-user {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    align-self: flex-end !important;
+    border-bottom-right-radius: 4px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+}
+
+/* Hide the "Você<br>" part to make it look like a clean modern bubble */
+.msg-user strong { display: none; }
+.msg-user br:first-of-type { display: none; }
+
+.msg-ai {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: none !important;
+    align-self: flex-start !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+}
+
+/* Style the AI name header */
+.msg-ai strong {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.msg-ai strong i {
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+}
+
+/* Welcome Screen Styling */
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    width: 100%;
+    transition: opacity 0.3s ease;
+}
+
+.welcome-title {
+    font-size: 2.25rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+    color: var(--text-primary);
+}
+
+.suggestion-pill-container {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+}
+
+.suggestion-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.suggestion-pill:hover {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+}
+
+.suggestion-icon {
+    color: var(--accent-blue);
+}
+
+/* Floating Input Area */
+.chat-input-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+    background: linear-gradient(to top, var(--bg-main) 70%, transparent);
+    pointer-events: none; /* Let clicks pass through gradient */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.chat-input-inner {
+    width: 100%;
+    max-width: 800px;
+}
+
+.chat-input-container {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 0.6rem 0.6rem 0.6rem 1.25rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    pointer-events: auto; /* Re-enable clicks */
+    transition: border-color 0.2s;
+}
+
+.chat-input-container:focus-within {
+    border-color: var(--accent-blue);
+}
+
+.chat-input-add-btn {
+    padding: 0.5rem;
+    color: var(--text-secondary);
+    align-self: center;
+    margin-right: -0.25rem;
+}
+
+.chat-input-field {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    resize: none;
+    padding: 0.7rem 0;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    outline: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.chat-input-field::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.btn-send-circle {
+    background: var(--text-primary);
+    color: var(--bg-main);
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.btn-send-circle:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.btn-send-circle:active {
+    transform: scale(0.95);
+}
+
+.disclaimer-text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    opacity: 0.8;
+}

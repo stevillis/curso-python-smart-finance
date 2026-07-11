@@ -28,25 +28,21 @@
         </div>
     </div>
     <div class="responsive-grid">
-        <div class="card" style="display: flex; flex-direction: column;">
+        <div class="card dashboard-chart-card">
             <div>
-                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Evolução do Saldo</h3>
-                <p style="color: var(--text-secondary);
-                          font-size: 0.85rem;
-                          margin-bottom: 1.5rem">Crescimento do patrimônio nos últimos 5 meses</p>
+                <h3 class="metric-title dashboard-chart-title">Evolução do Saldo</h3>
+                <p class="dashboard-chart-subtitle">Crescimento do patrimônio nos últimos 5 meses</p>
             </div>
-            <div style="position: relative; flex-grow: 1; min-height: 220px;">
+            <div class="dashboard-chart-container">
                 <canvas id="cashflowChart"></canvas>
             </div>
         </div>
-        <div class="card" style="display: flex; flex-direction: column;">
+        <div class="card dashboard-chart-card">
             <div>
-                <h3 class="metric-title" style="margin-bottom: 0.25rem;">Receitas vs. Despesas</h3>
-                <p style="color: var(--text-secondary);
-                          font-size: 0.85rem;
-                          margin-bottom: 1.5rem">Comparativo financeiro do mês atual</p>
+                <h3 class="metric-title dashboard-chart-title">Receitas vs. Despesas</h3>
+                <p class="dashboard-chart-subtitle">Comparativo financeiro do mês atual</p>
             </div>
-            <div style="position: relative; flex-grow: 1; min-height: 220px;">
+            <div class="dashboard-chart-container">
                 <canvas id="donutChart"></canvas>
             </div>
         </div>

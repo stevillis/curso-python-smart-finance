@@ -26,10 +26,8 @@
                 <aside class="sidebar" id="sidebar">
                     <div class="brand">
                         <i class="fa-solid fa-chart-pie"></i> SmartFinance
-                        <button class="btn-icon"
+                        <button class="btn-icon sidebar-close-btn"
                                 onclick="toggleSidebar()"
-                                style="margin-left: auto;
-                                       display: none"
                                 id="sidebar-close-btn">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -85,68 +83,14 @@
         {% else %}
             <div class="global-theme-toggle">
                 <button onclick="toggleTheme(event)"
-                        class="btn-icon theme-toggle"
-                        title="Alternar Tema"
-                        style="padding: 0.5rem;
-                               border-radius: 50%;
-                               width: 40px;
-                               height: 40px;
-                               background: var(--bg-card);
-                               border: 1px solid var(--border-color);
-                               box-shadow: var(--shadow-sm)">
+                        class="btn-icon theme-toggle theme-toggle-floating"
+                        title="Alternar Tema">
                     <i class="fa-solid fa-moon theme-icon-indicator"></i>
                 </button>
             </div>
             {% block login_content %}{% endblock %}
         {% endif %}
-        <script>
-            // Theme toggling logic
-            function updateThemeIcon(theme) {
-                const icons = document.querySelectorAll('.theme-icon-indicator');
-                icons.forEach(icon => {
-                    if (theme === 'dark') {
-                        icon.className = 'fa-solid fa-sun theme-icon-indicator';
-                        if (icon.nextSibling && icon.nextSibling.nodeType === 3 && icon.nextSibling.textContent.includes('Tema')) {
-                            icon.nextSibling.textContent = ' Tema Claro';
-                        }
-                    } else {
-                        icon.className = 'fa-solid fa-moon theme-icon-indicator';
-                        if (icon.nextSibling && icon.nextSibling.nodeType === 3 && icon.nextSibling.textContent.includes('Tema')) {
-                            icon.nextSibling.textContent = ' Tema Escuro';
-                        }
-                    }
-                });
-            }
-
-            function toggleTheme(e) {
-                e.preventDefault();
-                const html = document.documentElement;
-                const currentTheme = html.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                html.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            }
-
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('sidebar-overlay');
-                sidebar.classList.toggle('sidebar-open');
-                overlay.classList.toggle('active');
-            }
-
-            // Init icon and mobile display on load
-            document.addEventListener('DOMContentLoaded', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-                updateThemeIcon(currentTheme);
-                
-                // Show close button in sidebar only on mobile
-                if (window.innerWidth <= 768) {
-                    const closeBtn = document.getElementById('sidebar-close-btn');
-                    if (closeBtn) closeBtn.style.display = 'block';
-                }
-            });
-        </script>
+        <script src="/static/js/main.js"></script>
         {% block extra_js %}{% endblock %}
     </body>
 </html>

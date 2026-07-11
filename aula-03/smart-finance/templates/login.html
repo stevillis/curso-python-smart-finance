@@ -7,15 +7,12 @@
             <p>Acesse a sua plataforma financeira</p>
             {% if messages %}
                 {% for message in messages %}
-                    <div style="color: var(--accent-red);
-                                margin-bottom: 1.25rem;
-                                font-size: 0.9rem;
-                                font-weight: 500">{{ message }}</div>
+                    <div class="auth-message-error">{{ message }}</div>
                 {% endfor %}
             {% endif %}
             <form method="POST" action="{% url 'users:login' %}">
                 {% csrf_token %}
-                <div class="form-group" style="text-align: left;">
+                <div class="form-group text-left">
                     <label for="username">Usuário</label>
                     <input type="text"
                            id="username"
@@ -24,7 +21,7 @@
                            required
                            placeholder="Digite seu usuário">
                 </div>
-                <div class="form-group" style="text-align: left;">
+                <div class="form-group text-left">
                     <label for="password">Senha</label>
                     <input type="password"
                            id="password"
@@ -33,15 +30,11 @@
                            required
                            placeholder="Digite sua senha">
                 </div>
-                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Entrar</button>
+                <button type="submit" class="btn-primary mt-4">Entrar</button>
             </form>
-            <div style="margin-top: 2rem; font-size: 0.95rem;">
-                <span style="color: var(--text-secondary);">Ainda não tem uma conta?</span>
-                <a href="{% url 'users:register' %}"
-                   style="color: var(--accent-blue);
-                          text-decoration: none;
-                          font-weight: 600;
-                          margin-left: 0.25rem">Cadastre-se</a>
+            <div class="auth-footer">
+                <span class="auth-footer-text">Ainda não tem uma conta?</span>
+                <a href="{% url 'users:register' %}" class="auth-link">Cadastre-se</a>
             </div>
         </div>
     </div>
